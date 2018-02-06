@@ -8,8 +8,12 @@ import java.net.URL;
 
 public class GetJsonFile {
 
-  private static final int STATUS_OK = 200;
-
+  /**
+   * @param url link to access file from
+   * @return ojejct of type layout
+   * @throws UnirestException library exception thrown
+   * @throws MalformedURLException thrown if URL is invalid
+   */
   public static Layout makeApiRequest(String url) throws UnirestException, MalformedURLException {
     final HttpResponse<String> stringHttpResponse;
 
@@ -19,7 +23,8 @@ public class GetJsonFile {
     stringHttpResponse = Unirest.get(url).asString();
     // Check to see if the request was successful; if so, convert the payload JSON into Java objects
     Layout layoutMap = null;
-    if (stringHttpResponse.getStatus() == STATUS_OK) {
+
+    if (stringHttpResponse.getStatus() == AdventureConstants.STATUS_OK) {
       String json = stringHttpResponse.getBody();
       Gson gson = new Gson();
       layoutMap = gson.fromJson(json, Layout.class);

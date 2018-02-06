@@ -9,14 +9,17 @@ import static org.junit.Assert.*;
 
 public class GetJsonFileTest {
 
-  Layout expectedLayout = null;
+  public static Gson gson = new Gson();
+  public static Layout expectedLayout =
+      gson.fromJson(Data.getFileContentsAsString("siebel.json"), Layout.class);
 
-  @Before
-  public void setUp() throws Exception {
-    Gson gson = new Gson();
-    expectedLayout = gson.fromJson(Data.getFileContentsAsString("siebel.json"), Layout.class);
-  }
-
+  /**
+   * Tests if layout return from URL is same as the one locally retrieved by getFileContentsAsString
+   * method
+   *
+   * @throws MalformedURLException thrown if the URL is invalid
+   * @throws UnirestException Unirest Library exception
+   */
   @Test
   public void makeApiRequestTest() throws MalformedURLException, UnirestException {
     assertEquals(

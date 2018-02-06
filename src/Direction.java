@@ -1,4 +1,3 @@
-
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Objects;
@@ -7,23 +6,18 @@ public class Direction {
 
   @SerializedName("directionName")
   private String directionName;
+
   @SerializedName("room")
   private String room;
 
+  /** @return name of direction */
   public String getDirectionName() {
     return directionName;
   }
 
-  public void setDirectionName(String directionName) {
-    this.directionName = directionName;
-  }
-
+  /** @return room associated with the direction */
   public String getRoom() {
     return room;
-  }
-
-  public void setRoom(String room) {
-    this.room = room;
   }
 
   @Override
@@ -31,8 +25,7 @@ public class Direction {
     if (this == o) return true;
     if (!(o instanceof Direction)) return false;
     Direction direction = (Direction) o;
-    return Objects.equals(getDirectionName(), direction.getDirectionName()) &&
-            Objects.equals(getRoom(), direction.getRoom());
+    return Objects.equals(getDirectionName(), direction.getDirectionName())
+        && Objects.equals(getRoom(), direction.getRoom());
   }
-
 }

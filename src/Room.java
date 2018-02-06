@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
@@ -18,38 +17,30 @@ public class Room {
   @SerializedName("directions")
   private ArrayList<Direction> directions = null;
 
+  /** @return name of room */
   public String getName() {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
+  /** @return description of room */
   public String getDescription() {
     return description;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
+  /** @return list of items contained in room */
   public ArrayList<String> getItems() {
     return items;
   }
 
-  public void setItems(ArrayList<String> items) {
-    this.items = items;
-  }
-
+  /** @return list of possible directions to go in from the room */
   public ArrayList<Direction> getDirections() {
     return directions;
   }
 
-  public void setDirections(ArrayList<Direction> directions) {
-    this.directions = directions;
-  }
-
+  /**
+   * @param o obejcts to e compared
+   * @return boolean value from comparison
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
