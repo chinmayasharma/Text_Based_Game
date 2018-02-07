@@ -20,6 +20,10 @@ public class Direction {
     return room;
   }
 
+  /**
+   * @param o object to be compared
+   * @return boolean value from comparison
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
