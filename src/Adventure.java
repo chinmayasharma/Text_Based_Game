@@ -435,4 +435,28 @@ public class Adventure {
     }
     return true;
   }
+
+  ArrayList<Room> visited = new ArrayList<>();
+
+  public boolean mapValidator(Room room) {
+
+    // loops through all directions
+    for (Direction direction : room.getDirections()) {
+      Room nextRoom = findRoom(direction.getRoom());
+      boolean validity;
+      validity = mapValidator(nextRoom);
+
+      if (nextRoom.getName().equalsIgnoreCase(layout.getEndingRoom())) {
+        return true;
+      }
+
+      // checks for validity
+      if (validity) {
+        visited.add(nextRoom);
+        return true;
+      }
+      // checks for equality
+    }
+    return true;
+  }
 }
