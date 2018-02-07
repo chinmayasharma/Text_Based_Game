@@ -8,11 +8,9 @@ import java.util.ArrayList;
 
 public class Adventure {
 
-  public static Layout layout;
-  public boolean startGame;
-  public boolean endGame;
+  public Layout layout;
   public Room currentRoom;
-  public ArrayList<String> collectedItems;
+  private ArrayList<String> collectedItems;
   public ArrayList<String> possibleItems;
   public ArrayList<Direction> possibleDirections;
 
@@ -21,12 +19,11 @@ public class Adventure {
    *
    * @param setUrl sets URL to specified value
    */
-  public static void loadGame(String setUrl) {
+  private Layout loadGame(String setUrl) {
     try {
 
       //
-      layout = GetJsonFile.makeApiRequest(setUrl);
-      System.out.println(AdventureConstants.GAME_LOADED_MESSAGE);
+      layout = Layout.makeApiRequest(setUrl);
       System.out.println("\n");
 
     } catch (UnirestException e) {
@@ -37,37 +34,23 @@ public class Adventure {
 
       System.out.println("Bad URL: " + setUrl);
     }
-  }
 
-  /** @return */
-  public static Room findStartingRoom() {
-    ArrayList<Room> roomList;
-    roomList = layout.getRooms();
-    if (roomList == null || roomList.isEmpty()) {
-      return null;
-    }
-    for (Room room : roomList) {
-      if (room.getName().equalsIgnoreCase(layout.getStartingRoom())) {
-        return room;
-      }
-    }
-    return null;
+    return layout;
   }
 
   /**
    * Initializes an object of type Adventure
    *
-   * @param setStartGame boolean value to check if game has started
-   * @param setEndGame boolean value to check if game has ended
-   * @param setCurrentRoom sets currentRoom to the room in the 0th index
+   * @param url takes String URL as parameter
    */
-  public Adventure(boolean setStartGame, boolean setEndGame, Room setCurrentRoom) {
-    this.startGame = setStartGame;
-    this.endGame = setEndGame;
-    this.currentRoom = setCurrentRoom;
+  Adventure(String url) {
+
+    // loads layout with respect to default or specified URl
+    this.layout = loadGame(url);
+    this.currentRoom = findRoom(layout.getStartingRoom());
     this.collectedItems = new ArrayList<>();
-    this.possibleItems = setCurrentRoom.getItems();
-    this.possibleDirections = setCurrentRoom.getDirections();
+    this.possibleItems = currentRoom.getItems();
+    this.possibleDirections = currentRoom.getDirections();
   }
 
   /**
@@ -101,12 +84,9 @@ public class Adventure {
       System.out.println("Please enter a URL for Json file");
       url = input.readLine();
     }
-    // loads layout with respect to default or specified URl
-    loadGame(url);
 
     // creates an object of type Adventure
-
-    Adventure game = new Adventure(false, false, findStartingRoom());
+    Adventure game = new Adventure(url);
 
     // calls methods to begin playing game
     game.playGame();
@@ -117,11 +97,14 @@ public class Adventure {
    *
    * @throws IOException exception is thrown (mandated by BufferedReader syntax)
    */
-  public void playGame() throws IOException {
+  private void playGame() throws IOException {
 
     // creates an object of type BufferedReader that will read user input
     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-    boolean invalidAction;
+
+    boolean startGame = false;
+    boolean endGame = false;
+    boolean invalidAction = false;
 
     // checks boolean value for game to end
     while (!endGame) {
@@ -146,7 +129,7 @@ public class Adventure {
       // handles possible null pointer exception
       try {
 
-        System.out.println(itemArrayListToString(currentRoom.getItems()));
+        System.out.println("This room contains: " + itemArrayListToString(currentRoom.getItems()));
       } catch (NullPointerException e) {
 
         System.out.println("This room contains nothing.");
@@ -163,23 +146,13 @@ public class Adventure {
         // splits userInput by whitespace
         String[] inputWords = userInput.trim().split(" ");
 
-        // checks if userInput had at least 2 words
-        if (inputWords.length < 2) {
-
-          // prints invalid input message
-          System.out.println("I can't " + userInput);
-          invalidAction = true;
-          userInput = input.readLine();
-        }
-
         // checks if first word was "Go" and if second word was a valid direction
-        else if (inputWords[0].equalsIgnoreCase("Go")
-            && checkDirection(inputWords[1], possibleDirections)) {
+        if (inputWords[0].equalsIgnoreCase("Go") && checkDirection(inputWords[1])) {
 
           invalidAction = false;
 
           // updates current room based on input direction
-          currentRoom = changeRoom(inputWords[1], possibleDirections);
+          changeRoom(inputWords[1]);
 
           // updates possible directions based on current room
           setPossibleDirections(currentRoom.getDirections());
@@ -191,13 +164,12 @@ public class Adventure {
           invalidAction = false;
 
           // adds item to collected items
-          collectedItems.add(findItem(inputWords[1], possibleItems));
+          collectedItems.add(findItem(inputWords[1], currentRoom.getItems()));
 
           // removes item from possible items
-          currentRoom.getItems().remove(findItem(inputWords[1], possibleItems));
+          currentRoom.getItems().remove(findItem(inputWords[1], currentRoom.getItems()));
 
-          // updates collected and possible items to reflects changes performed above
-          setCollectedItems(collectedItems);
+          // updates possible items to reflects changes performed above
           setPossibleItems(currentRoom.getItems());
 
           // checks if first word was "Drop" and if second word was a valid item
@@ -213,11 +185,10 @@ public class Adventure {
           collectedItems.remove(findItem(inputWords[1], collectedItems));
 
           // updates collected and possible items to reflects changes performed above
-          setCollectedItems(collectedItems);
-          setPossibleItems(possibleItems);
+          setPossibleItems(currentRoom.getItems());
 
           // checks if the first word was "List"
-        } else if (inputWords[0].equalsIgnoreCase("List")) {
+        } else if (inputWords[0].equalsIgnoreCase("list")) {
 
           invalidAction = false;
 
@@ -228,12 +199,11 @@ public class Adventure {
         } else if (inputWords[0].equalsIgnoreCase("Exit")
             || inputWords[0].equalsIgnoreCase("Quit")) {
 
-          invalidAction = false;
-          // sets endGame as true to escape outer loop
-          endGame = true;
+          break;
 
         } else {
 
+          // in case of invalid input
           System.out.println("I can't " + userInput);
           invalidAction = true;
           userInput = input.readLine();
@@ -244,11 +214,9 @@ public class Adventure {
     }
   }
 
-  /** @param itemList list of items */
-  private void setCollectedItems(ArrayList<String> itemList) {
-
-    // updates list of collected items
-    collectedItems = itemList;
+  /** @return current room value returned */
+  public Room getCurrentRoom() {
+    return currentRoom;
   }
 
   private void setPossibleItems(ArrayList<String> itemList) {
@@ -271,8 +239,6 @@ public class Adventure {
 
     // creates a new instance of type String Builder
     StringBuilder itemString = new StringBuilder();
-
-    itemString.append("This room contains ");
 
     // checks if list of items is null
     if (itemList == null || itemList.isEmpty()) {
@@ -314,7 +280,7 @@ public class Adventure {
 
     // checks if list of directions is null
     if (directionList == null) {
-      directionString.append(AdventureConstants.EMPTY_ITEM_LIST);
+      directionString.append(AdventureConstants.EMPTY_DIRECTION_LIST);
 
       // checks if list of directions has a single direction
     } else if (directionList.size() == 1) {
@@ -339,13 +305,16 @@ public class Adventure {
 
   /**
    * @param inputDirection user specified input direction
-   * @param directionList list of possible directions
    * @return boolean value of direction contained in list
    */
-  public boolean checkDirection(String inputDirection, ArrayList<Direction> directionList) {
+  public boolean checkDirection(String inputDirection) {
+
+    if (inputDirection == null || inputDirection.isEmpty()) {
+      return false;
+    }
 
     // loops through all directions
-    for (Direction direction : directionList) {
+    for (Direction direction : currentRoom.getDirections()) {
 
       // checks if name of direct exists in list of possible directions
       if (inputDirection.equalsIgnoreCase(direction.getDirectionName())) {
@@ -378,34 +347,20 @@ public class Adventure {
     return false;
   }
 
-  /**
-   * @param inputDirection name of user specified direction
-   * @param directionList list of possible directions
-   * @return new room to e set as current room
-   */
-  public Room changeRoom(String inputDirection, ArrayList<Direction> directionList) {
-    String roomName = "";
-
-    // loops through all directions
-    for (Direction direction : directionList) {
-
-      // checks if name of direction exists in list of possible directions
-      if (inputDirection.equalsIgnoreCase(direction.getDirectionName())) {
-        roomName = direction.getRoom();
+  /** @param inputDirection name of user specified direction */
+  public boolean changeRoom(String inputDirection) {
+    String roomWanted = "";
+    for (Direction direction : currentRoom.getDirections()) {
+      // find the room that is under the specific direction
+      if (direction.getDirectionName().toLowerCase().equals(inputDirection)) {
+        roomWanted = direction.getRoom();
       }
     }
-
-    Room updatedRoom = null;
-
-    // loops through all rooms
-    for (Room room : layout.getRooms()) {
-
-      // checks if name of room exists in list of rooms
-      if (roomName.equals(room.getName())) {
-        updatedRoom = room;
-      }
+    if (roomWanted.isEmpty()) {
+      return false;
     }
-    return updatedRoom;
+    currentRoom = findRoom(roomWanted);
+    return true;
   }
 
   /**
@@ -415,6 +370,15 @@ public class Adventure {
    */
   public String findItem(String inputString, ArrayList<String> itemList) {
 
+    // checks if inputString is empty or null
+    if (inputString == null || inputString.isEmpty()) {
+      return null;
+    }
+
+    // checks if itemList is empty or null
+    if (itemList == null || itemList.isEmpty()) {
+      return null;
+    }
     // loops through all items in list of items
     for (String item : itemList) {
 
@@ -425,5 +389,50 @@ public class Adventure {
       }
     }
     return null;
+  }
+
+  /** @return finds room absed on name */
+  public Room findRoom(String roomName) {
+    Room newRoom = null;
+    ArrayList<Room> roomList = layout.getRooms();
+
+    // loops through all rooms
+    for (Room room : roomList) {
+
+      // checks if room name matches desired room
+      if (room.getName().equalsIgnoreCase(roomName)) {
+        newRoom = room;
+      }
+    }
+    return newRoom;
+  }
+
+  /** @return boolean value true if all rooms are connected */
+  public boolean planValidator() {
+
+    // loops through all rooms
+    for (Room room : layout.getRooms()) {
+
+      // loops through all directions
+      for (Direction direction : room.getDirections()) {
+        boolean pathContained = false;
+        Room nextRoom = findRoom(direction.getRoom());
+
+        // parses through all directions for
+        for (Direction nextDirection : nextRoom.getDirections()) {
+
+          // checks for equality
+          if (nextDirection.getRoom().equalsIgnoreCase(room.getName())) {
+            pathContained = true;
+          }
+        }
+
+        // if path not found
+        if (!pathContained) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }

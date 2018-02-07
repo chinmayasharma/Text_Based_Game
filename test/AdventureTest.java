@@ -1,72 +1,179 @@
 import com.google.gson.Gson;
-import com.mashape.unirest.http.exceptions.UnirestException;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
 public class AdventureTest {
 
-  Adventure testGame;
+  public Adventure standardGame;
+  public Adventure circularGame;
 
   @Before
-  public void setUp() throws Exception {
-    Gson gson = new Gson();
-    GetJsonFileTest.expectedLayout =
-        gson.fromJson(Data.getFileContentsAsString("siebel.json"), Layout.class);
-    testGame = new Adventure(false, false, GetJsonFileTest.expectedLayout.getRooms().get(0));
+  public void setUp() {
+    standardGame = new Adventure("https://courses.engr.illinois.edu/cs126/adventure/siebel.json");
+    circularGame = new Adventure("https://courses.engr.illinois.edu/cs126/adventure/circular.json");
   }
 
-  @Test
-  public void main() {
-    findStartingRoom();
-  }
+  /**
+   * *********************************************************************************************************
+   * Starting and Ending Room Tests
+   * *********************************************************************************************************
+   */
 
   /** checks if starting Room as returned by findStaringRoom is same as expected room */
   @Test
-  public void findStartingRoom() {
-    System.out.println(testGame.currentRoom.getName());
-    assertEquals(testGame.currentRoom, testGame.findStartingRoom());
+  public void findStartingRoomTest() {
+    assertEquals(
+        standardGame.currentRoom, standardGame.findRoom(standardGame.layout.getStartingRoom()));
   }
+
+  /** checks if ending Room as returned by findStaringRoom is same as expected room */
+  @Test
+  public void findEndingRoomTest() {
+    assertEquals(
+        "Siebel1314", standardGame.findRoom(standardGame.layout.getEndingRoom()).getName());
+  }
+
+  /**
+   * *********************************************************************************************************
+   * String output for list of items and directions
+   * *********************************************************************************************************
+   */
 
   /** return list if possible items as String */
   @Test
-  public void itemArrayListToString() {
-    assertEquals(
-        "This room contains coin.", testGame.itemArrayListToString(testGame.possibleItems));
+  public void itemArrayListToStringTest() {
+    assertEquals("coin.", standardGame.itemArrayListToString(standardGame.possibleItems));
+  }
+
+  /** return list if possible null items as String */
+  @Test
+  public void invalidItemArrayListToStringTest() {
+    assertEquals("nothing", standardGame.itemArrayListToString(null));
   }
 
   /** return list if possible directions as String */
   @Test
-  public void directionArrayListToString() {
+  public void directionArrayListToStringTest() {
     assertEquals(
         "From here, you can go: East",
-        testGame.directionArrayListToString(testGame.possibleDirections));
+        standardGame.directionArrayListToString(standardGame.possibleDirections));
+  }
+  /** return list if possible, null directions list as String */
+  @Test
+  public void invalidDirectionArrayListToStringTest() {
+    assertEquals("From here, you can go: nowhere", standardGame.directionArrayListToString(null));
   }
 
-  /** checks if direction exists in the directionList */
+  /**
+   * *********************************************************************************************************
+   * String output for checking direction
+   * *********************************************************************************************************
+   */
+
+  /** checks if direction exists in the empty directionList if empty */
   @Test
-  public void checkDirection() {
-    assertEquals(true, testGame.checkDirection("East", testGame.possibleDirections));
+  public void emptyDirectionTest() {
+    assertEquals(false, standardGame.checkDirection(""));
   }
 
-  /** checks if item exists in the itemList */
+  /** checks if direction exists in the empty directionList if valid */
   @Test
-  public void checkItem() {
-    assertEquals(true, testGame.checkItem("coin", testGame.possibleItems));
+  public void checkDirectionTest() {
+    assertTrue(standardGame.checkDirection("East"));
   }
+
+  /** checks if direction exists in the empty directionList if invalid */
+  @Test
+  public void checkInvalidDirectionTest() {
+    assertFalse(standardGame.checkDirection("Down"));
+  }
+
+  /** checks if direction exists in the empty directionList if null */
+  @Test
+  public void checkNullDirectionTest() {
+    assertFalse(standardGame.checkDirection(null));
+  }
+
+  /**
+   * *********************************************************************************************************
+   * String output for checking items
+   * *********************************************************************************************************
+   */
+
+  /** checks if item exists in the itemList, if valid */
+  @Test
+  public void checkItemTest() {
+    assertEquals(true, standardGame.checkItem("coin", standardGame.possibleItems));
+  }
+
+  /** checks if item exists in the itemList, if null */
+  @Test
+  public void invalidItemTest() {
+    assertEquals(false, standardGame.checkItem("coin", null));
+  }
+
+  /** checks if item exists in the itemList, if invalid */
+  @Test
+  public void findInvalidItemTest() {
+    assertEquals(null, standardGame.findItem("can", standardGame.possibleItems));
+  }
+
+  /** checks if item exists in the itemList, if null */
+  @Test
+  public void findNullItemTest() {
+    assertEquals(null, standardGame.findItem(null, standardGame.possibleItems));
+  }
+
+  /** checks if item exists in the itemList, if itemList is null */
+  @Test
+  public void findItemNullListTest() {
+    assertEquals(null, standardGame.findItem("coin", null));
+  }
+
+  /** checks if item exists in the itemList, if empty */
+  @Test
+  public void findEmptyStringItemTest() {
+    assertEquals(null, standardGame.findItem("", standardGame.possibleItems));
+  }
+
+  /**
+   * *********************************************************************************************************
+   * Tests for changing room
+   * *********************************************************************************************************
+   */
 
   /** compares updated room to room change using changeRoom method */
   @Test
-  public void changeRoom() {
-    assertEquals("SiebelEntry", testGame.changeRoom("East", testGame.possibleDirections).getName());
+  public void changeRoomTest() {
+    boolean change = standardGame.changeRoom("east");
+    assertEquals(standardGame.layout.getRooms().get(1), standardGame.getCurrentRoom());
   }
 
-  /** compared expected item with item in first room */
+  /** compares updated room to room change using changeRoom method, if invalid */
   @Test
-  public void findItem() {
-    assertEquals("coin", testGame.findItem("coin", testGame.possibleItems));
+  public void invalidChangeRoomTest() {
+    assertFalse(standardGame.changeRoom("est"));
+  }
+
+  /**
+   * *********************************************************************************************************
+   * Tests for floor plan validator
+   * *********************************************************************************************************
+   */
+
+  /** validates floor plan, as invalid */
+  @Test
+  public void invalidPlanValidatorTest() {
+    assertFalse(circularGame.planValidator());
+  }
+
+  /** validates floor plan, as valid */
+  @Test
+  public void planValidatorTest() {
+    assertTrue(standardGame.planValidator());
   }
 }
