@@ -37,6 +37,7 @@ public class Room {
     return directions;
   }
 
+
   /**
    * @param o obejcts to e compared
    * @return boolean value from comparison
