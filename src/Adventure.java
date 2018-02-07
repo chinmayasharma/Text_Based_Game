@@ -199,6 +199,7 @@ public class Adventure {
         } else if (inputWords[0].equalsIgnoreCase("Exit")
             || inputWords[0].equalsIgnoreCase("Quit")) {
 
+          endGame = true;
           break;
 
         } else {
