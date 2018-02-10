@@ -1,45 +1,80 @@
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Objects;
-
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class Layout {
+
   @SerializedName("startingRoom")
   private String startingRoom;
 
   @SerializedName("endingRoom")
   private String endingRoom;
 
-  @SerializedName("rooms")
-  private ArrayList<Room> rooms = new ArrayList<>();
+  @SerializedName("player")
+  private Player player;
 
-  /** @return name of starting room */
+  @SerializedName("rooms")
+  private ArrayList<Room> rooms = null;
+
   public String getStartingRoom() {
     return startingRoom;
   }
 
-  /** @return name of endingRoom */
+  public void setStartingRoom(String startingRoom) {
+    this.startingRoom = startingRoom;
+  }
+
+  public Layout withStartingRoom(String startingRoom) {
+    this.startingRoom = startingRoom;
+    return this;
+  }
+
   public String getEndingRoom() {
     return endingRoom;
   }
 
-  /** @return list of rooms */
+  public void setEndingRoom(String endingRoom) {
+    this.endingRoom = endingRoom;
+  }
+
+  public Layout withEndingRoom(String endingRoom) {
+    this.endingRoom = endingRoom;
+    return this;
+  }
+
+  public Player getPlayer() {
+    return player;
+  }
+
+  public void setPlayer(Player player) {
+    this.player = player;
+  }
+
+  public Layout withPlayer(Player player) {
+    this.player = player;
+    return this;
+  }
+
   public ArrayList<Room> getRooms() {
     return rooms;
   }
 
-  /**
-   * @param url link to access file from
-   * @return ojejct of type layout
-   * @throws UnirestException library exception thrown
-   * @throws MalformedURLException thrown if URL is invalid
-   */
+  public void setRooms(ArrayList<Room> rooms) {
+    this.rooms = rooms;
+  }
+
+  public Layout withRooms(ArrayList<Room> rooms) {
+    this.rooms = rooms;
+    return this;
+  }
+
   public static Layout makeApiRequest(String url) throws UnirestException, MalformedURLException {
 
     final HttpResponse<String> stringHttpResponse;
@@ -70,6 +105,7 @@ public class Layout {
     Layout layout = (Layout) o;
     return Objects.equals(getStartingRoom(), layout.getStartingRoom())
         && Objects.equals(getEndingRoom(), layout.getEndingRoom())
-        && Objects.equals(getRooms(), layout.getRooms());
+        && Objects.equals(getRooms(), layout.getRooms())
+        && Objects.equals(getPlayer(), layout.getPlayer());
   }
 }

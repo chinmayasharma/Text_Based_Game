@@ -12,10 +12,13 @@ public class Room {
   private String description;
 
   @SerializedName("items")
-  private ArrayList<String> items = null;
+  private ArrayList<Item> items = null;
 
   @SerializedName("directions")
   private ArrayList<Direction> directions = null;
+
+  @SerializedName("monstersInRoom")
+  private ArrayList<Monster> monstersInRoom = null;
 
   /** @return name of room */
   public String getName() {
@@ -28,7 +31,7 @@ public class Room {
   }
 
   /** @return list of items contained in room */
-  public ArrayList<String> getItems() {
+  public ArrayList<Item> getItems() {
     return items;
   }
 
@@ -37,6 +40,75 @@ public class Room {
     return directions;
   }
 
+  /**
+   * @param directions
+   * @param items
+   * @param description
+   * @param name
+   * @param monstersInRoom
+   */
+  public Room(
+      String name,
+      String description,
+      ArrayList<Item> items,
+      ArrayList<Direction> directions,
+      ArrayList<Monster> monstersInRoom) {
+    this.name = name;
+    this.description = description;
+    this.items = items;
+    this.directions = directions;
+    this.monstersInRoom = monstersInRoom;
+  }
+
+  /** @param name */
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  /**
+   * @param name
+   * @return
+   */
+  public Room withName(String name) {
+    this.name = name;
+    return this;
+  }
+
+  public Room withDescription(String description) {
+    this.description = description;
+    return this;
+  }
+
+  public void setItems(ArrayList<Item> items) {
+    this.items = items;
+  }
+
+  public Room withItems(ArrayList<Item> items) {
+    this.items = items;
+    return this;
+  }
+
+  public void setDirections(ArrayList<Direction> directions) {
+    this.directions = directions;
+  }
+
+  public Room withDirections(ArrayList<Direction> directions) {
+    this.directions = directions;
+    return this;
+  }
+
+  public ArrayList<Monster> getMonstersInRoom() {
+    return monstersInRoom;
+  }
+
+  public void setMonstersInRoom(ArrayList<Monster> monstersInRoom) {
+    this.monstersInRoom = monstersInRoom;
+  }
+
+  public Room withMonstersInRoom(ArrayList<Monster> monstersInRoom) {
+    this.monstersInRoom = monstersInRoom;
+    return this;
+  }
 
   /**
    * @param o obejcts to e compared

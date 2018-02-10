@@ -1,6 +1,5 @@
 import com.google.gson.Gson;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.net.MalformedURLException;
@@ -10,7 +9,7 @@ import static org.junit.Assert.*;
 public class LayoutTest {
 
   private static Gson gson = new Gson();
-  public static Layout expectedLayout =
+  private static Layout expectedLayout =
       gson.fromJson(AdventureConstants.getFileContentsAsString("siebel.json"), Layout.class);
 
   /**
@@ -23,8 +22,7 @@ public class LayoutTest {
   @Test
   public void apiRequestTest() throws MalformedURLException, UnirestException {
     assertEquals(
-        expectedLayout,
-        Layout.makeApiRequest("https://courses.engr.illinois.edu/cs126/adventure/siebel.json"));
+        expectedLayout, Layout.makeApiRequest("https://chinmayasharma.github.io/siebel.json"));
   }
 
   /** Checks if name of first room is same as starting room */
