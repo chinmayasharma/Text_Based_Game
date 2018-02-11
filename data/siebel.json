@@ -13,9 +13,9 @@
         "damage": 10.0
       }
     ],
-    "attack": 10.0,
-    "defense": 10.0,
-    "health": 10.0,
+    "attack": 350.0,
+    "defense": 250.0,
+    "health": 1000.0,
     "level": 1
   },
   "rooms": [
@@ -37,9 +37,9 @@
       "monstersInRoom": [
         {
           "name": "Zombie",
-          "attack": 5.0,
-          "defense": 5.0,
-          "health": 12.0
+          "attack": 300.0,
+          "defense": 150.0,
+          "health": 750.0
         }
       ]
     },
@@ -265,4 +265,3 @@
     }
   ]
 }
-

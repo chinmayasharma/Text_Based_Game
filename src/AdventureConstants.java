@@ -6,10 +6,16 @@ import java.nio.file.Path;
 public class AdventureConstants {
 
   public static String LOAD_GAME_MESSAGE = "Your game has been loaded.";
+  public static String BEGIN_MESSAGE = "Your journey begins here.";
+  public static String ROOM_MESSAGE = "This room contains ";
   public static String EMPTY_ITEM_LIST = "nothing";
   public static String EMPTY_MONSTER_LIST = "no monster";
   public static String EMPTY_DIRECTION_LIST = "nowhere";
   public static String DEATH_MESSAGE = "You have died.";
+  public static String CANT_MOVE = "There are still monsters here, I can’t move.";
+  public static String CANT_TAKE = "There are still monsters here, I can’t take that.";
+
+
 
   public static final int STATUS_OK = 200;
 
