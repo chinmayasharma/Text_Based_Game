@@ -25,14 +25,15 @@ public class AdventureTest {
   @Test
   public void findStartingRoomTest() {
     assertEquals(
-        standardGame.currentRoom, standardGame.findRoom(standardGame.layout.getStartingRoom()));
+        standardGame.currentRoom,
+        standardGame.layout.findRoom(standardGame.layout.getStartingRoom()));
   }
 
   /** checks if ending Room as returned by findStaringRoom is same as expected room */
   @Test
   public void findEndingRoomTest() {
     assertEquals(
-        "Siebel1314", standardGame.findRoom(standardGame.layout.getEndingRoom()).getName());
+        "Siebel1314", standardGame.layout.findRoom(standardGame.layout.getEndingRoom()).getName());
   }
 
   /**
@@ -44,26 +45,19 @@ public class AdventureTest {
   /** return list if possible items as String */
   @Test
   public void itemArrayListToStringTest() {
-    assertEquals("coin.", standardGame.itemString(standardGame.possibleItems));
+    assertEquals("coin.", standardGame.currentRoom.itemString(standardGame.currentRoom.getItems()));
   }
 
   /** return list if possible null items as String */
   @Test
   public void invalidItemArrayListToStringTest() {
-    assertEquals("nothing", standardGame.itemString(null));
+    assertEquals("nothing", standardGame.currentRoom.itemString(null));
   }
 
   /** return list if possible directions as String */
   @Test
   public void directionArrayListToStringTest() {
-    assertEquals(
-        "From here, you can go: East",
-        standardGame.directionString(standardGame.possibleDirections));
-  }
-  /** return list if possible, null directions list as String */
-  @Test
-  public void invalidDirectionArrayListToStringTest() {
-    assertEquals("From here, you can go: nowhere", standardGame.directionString(null));
+    assertEquals("From here, you can go: East", standardGame.currentRoom.directionString());
   }
 
   /**
@@ -76,13 +70,6 @@ public class AdventureTest {
   @Test
   public void emptyDirectionTest() {
     assertFalse(standardGame.changeRoom(""));
-  }
-
-  /** checks if direction exists in the empty directionList if valid */
-  @Test
-  public void checkDirectionTest() {
-System.out.println(standardGame.currentRoom.getName());
-    assertEquals(true, standardGame.changeRoom("East"));
   }
 
   /** checks if direction exists in the empty directionList if invalid */
@@ -106,31 +93,25 @@ System.out.println(standardGame.currentRoom.getName());
   /** checks if item exists in the itemList, if valid */
   @Test
   public void checkItemTest() {
-    assertTrue(standardGame.itemHandler("take","coin", standardGame.currentRoom.getItems()));
+    assertTrue(standardGame.currentRoom.addItem("coin"));
   }
 
   /** checks if item exists in the itemList, if invalid */
   @Test
   public void findInvalidItemTest() {
-    assertNull(standardGame.findItem("can", standardGame.possibleItems));
+    assertNull(standardGame.currentRoom.findItem("can"));
   }
 
   /** checks if item exists in the itemList, if null */
   @Test
   public void findNullItemTest() {
-    assertNull(standardGame.findItem(null, standardGame.possibleItems));
-  }
-
-  /** checks if item exists in the itemList, if itemList is null */
-  @Test
-  public void findItemNullListTest() {
-    assertNull(standardGame.findItem("coin", null));
+    assertNull(standardGame.currentRoom.findItem(null));
   }
 
   /** checks if item exists in the itemList, if empty */
   @Test
   public void findEmptyStringItemTest() {
-    assertNull(standardGame.findItem("", standardGame.possibleItems));
+    assertNull(standardGame.currentRoom.findItem(""));
   }
 
   /**
@@ -142,6 +123,6 @@ System.out.println(standardGame.currentRoom.getName());
   /** validates floor plan, as valid */
   @Test
   public void planValidatorTest() {
-    assertTrue(standardGame.planValidator());
+    assertTrue(standardGame.layout.planValidator());
   }
 }
