@@ -16,24 +16,19 @@ public class Monster {
   @SerializedName("health")
   private Double health;
 
-  private double maxHealth;
+  public static double maxHealth = 750;
 
   /**
    * @param defense
-   * @param level
-   * @param items
    * @param name
    * @param attack
    * @param health
    */
-  public Monster(
-      String name, ArrayList<Item> items, double attack, double defense, double health, int level) {
-    super();
+  public Monster(String name, double attack, double defense, double health) {
     this.name = name;
     this.attack = attack;
     this.defense = defense;
     this.health = health;
-    this.maxHealth = health;
   }
 
   public String getName() {
@@ -88,11 +83,18 @@ public class Monster {
     return this;
   }
 
-    public Double getMaxHealth() {
-        return maxHealth;
+  /** Provides health status of monster. */
+  public void getStatus() {
+
+    int monsterHealth = (int) ((getHealth() / maxHealth) * 20);
+
+    System.out.println("Monster: " + getName());
+    for (int i = 0; i < monsterHealth; i++) {
+      System.out.print("#|");
     }
 
-    public void setMaxHealth(double maxHealth) {
-        this.maxHealth = maxHealth;
+    for (int i = 0; i < 20 - monsterHealth; i++) {
+      System.out.print("_|");
     }
+  }
 }
