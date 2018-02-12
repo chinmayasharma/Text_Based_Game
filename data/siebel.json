@@ -1,91 +1,91 @@
 {
-  "startingRoom": "MatthewsStreet",
-  "endingRoom": "Siebel1314",
+  "startingRoom": "Champaign",
+  "endingRoom": "Miami",
   "player": {
     "name": "Chinmaya",
     "items": [
       {
-        "name": "laptop",
+        "name": "Toothbrush",
         "damage": 10.0
       },
       {
-        "name": "i-clicker",
+        "name": "Toilet-Paper",
         "damage": 10.0
       }
     ],
-    "attack": 350.0,
-    "defense": 250.0,
-    "health": 1000.0,
+    "attack": 35.0,
+    "defense": 25.0,
+    "health": 50.0,
     "level": 1
   },
   "rooms": [
     {
-      "name": "MatthewsStreet",
-      "description": "You are on Matthews, outside the Siebel Center",
+      "name": "Champaign",
+      "description": "You are in Champaign, IL, USA. You're in the middle of nowhere, so you better start moving",
       "items": [
         {
-          "name": "coin",
+          "name": "Textbook",
           "damage": 10.0
         }
       ],
       "directions": [
         {
           "directionName": "East",
-          "room": "SiebelEntry"
+          "room": "Philadelphia"
         }
       ],
       "monstersInRoom": [
         {
-          "name": "Zombie",
-          "attack": 300.0,
-          "defense": 150.0,
-          "health": 750.0
+          "name": "Nerd",
+          "attack": 30.0,
+          "defense": 15.0,
+          "health": 30.0
         }
       ]
     },
     {
-      "name": "SiebelEntry",
-      "description": "You are in the west entry of Siebel Center.  You can see the elevator, the ACM office, and hallways to the north and east.",
+      "name": "Philadelphia",
+      "description": "You are in Philadelphia, PA, USA. You see over-excited Eagles fans dancing around.",
       "items": [
         {
-          "name": "sweatshirt",
+          "name": "Map",
           "damage": 10.0
         },
         {
-          "name": "key",
+          "name": "Ticket",
           "damage": 10.0
         }
       ],
       "directions": [
         {
           "directionName": "West",
-          "room": "MatthewsStreet"
+          "room": "Champaign"
         },
         {
           "directionName": "Northeast",
-          "room": "AcmOffice"
+          "room": "New York"
         },
         {
           "directionName": "North",
-          "room": "SiebelNorthHallway"
+          "room": "Toronto"
         },
         {
           "directionName": "East",
-          "room": "SiebelEastHallway"
+          "room": "Shanghai"
         }
       ],
       "monstersInRoom": [
         {
           "name": "Vampire",
-          "attack": 10.0,
-          "defense": 10.0,
-          "health": 10.0
+          "attack": 30.0,
+          "defense": 15.0,
+          "health": 30.0
         }
       ]
     },
     {
-      "name": "AcmOffice",
-      "description": "You are in the ACM office.  There are lots of friendly ACM people.",
+      "name": "New York",
+      "description": "You are in New York, NY, USA. Let's go work at Wall Street! Oh wait, I was talking about myself... you should stick to playing the game.  ",
       "items": [
         {
           "name": "pizza",
@@ -99,43 +99,43 @@
       "directions": [
         {
           "directionName": "South",
-          "room": "SiebelEntry"
+          "room": "Miami"
         }
       ],
       "monstersInRoom": [
         {
           "name": "Cyclops",
-          "attack": 10.0,
-          "defense": 10.0,
-          "health": 10.0
+          "attack": 30.0,
+          "defense": 15.0,
+          "health": 30.0
         }
       ]
     },
     {
-      "name": "SiebelNorthHallway",
-      "description": "You are in the north hallway.  You can see Siebel 1112 and the door toward NCSA.",
+      "name": "Toronto",
+      "description": "You are in Toronto, Canada. It's best known as the home of the rapper Drake.",
       "directions": [
         {
           "directionName": "South",
-          "room": "SiebelEntry"
+          "room": "Philadelphia"
         },
         {
           "directionName": "NorthEast",
-          "room": "Siebel1112"
+          "room": "Greenland"
         }
       ],
       "monstersInRoom": [
         {
           "name": "Dracula",
-          "attack": 10.0,
-          "defense": 10.0,
-          "health": 10.0
+          "attack": 30.0,
+          "defense": 15.0,
+          "health": 30.0
         }
       ]
     },
     {
-      "name": "Siebel1112",
-      "description": "You are in Siebel 1112.  There is space for two code reviews in this room.",
+      "name": "Greenland",
+      "description": "You are in Greenland, Denmark. All you see is ice.",
       "items": [
         {
           "name": "USB-C connector",
@@ -149,27 +149,27 @@
       "directions": [
         {
           "directionName": "West",
-          "room": "SiebelNorthHallway"
+          "room": "Toronto"
         }
       ],
       "monstersInRoom": [
         {
           "name": "Gremlin",
-          "attack": 10.0,
-          "defense": 10.0,
-          "health": 10.0
+          "attack": 30.0,
+          "defense": 15.0,
+          "health": 30.0
         },
         {
           "name": "Werewolf",
-          "attack": 10.0,
-          "defense": 10.0,
-          "health": 10.0
+          "attack": 30.0,
+          "defense": 15.0,
+          "health": 30.0
         }
       ]
     },
     {
-      "name": "SiebelEastHallway",
-      "description": "You are in the east hallway.  You can see Einstein Bros' Bagels and a stairway.",
+      "name": "Shanghai",
+      "description": "You are in the east hallway. You can see Einstein Bros' Bagels and a stairway.",
       "items": [
         {
           "name": "bagel",
@@ -183,65 +183,51 @@
       "directions": [
         {
           "directionName": "West",
-          "room": "SiebelEntry"
+          "room": "Philadelphia"
         },
         {
           "directionName": "South",
-          "room": "Siebel1314"
+          "room": "Miami"
         },
         {
           "directionName": "Down",
-          "room": "SiebelBasement"
+          "room": "Melbourne"
         }
       ],
       "monstersInRoom": [
         {
           "name": "Cyclops",
-          "attack": 10.0,
-          "defense": 10.0,
-          "health": 10.0
+          "attack": 30.0,
+          "defense": 15.0,
+          "health": 30.0
         },
         {
           "name": "Godzilla",
-          "attack": 10.0,
-          "defense": 10.0,
-          "health": 10.0
+          "attack": 30.0,
+          "defense": 15.0,
+          "health": 30.0
         },
         {
           "name": "Golem",
-          "attack": 10.0,
-          "defense": 10.0,
-          "health": 10.0
+          "attack": 30.0,
+          "defense": 15.0,
+          "health": 30.0
         }
       ]
     },
     {
-      "name": "Siebel1314",
-      "description": "You are in Siebel 1314. There are happy CS 126 students doing a code review.",
+      "name": "Miami",
+      "description": "You are in Miami, FL, USA. Woo Hoo!!",
       "directions": [
         {
           "directionName": "North",
-          "room": "SiebelEastHallway"
-        }
-      ],
-      "monstersInRoom": [
-        {
-          "name": "Kraken",
-          "attack": 10.0,
-          "defense": 10.0,
-          "health": 10.0
-        },
-        {
-          "name": "Cerebus",
-          "attack": 10.0,
-          "defense": 10.0,
-          "health": 10.0
+          "room": "Shanghai"
         }
       ]
     },
     {
-      "name": "SiebelBasement",
-      "description": "You are in the basement of Siebel.  You see tables with students working and door to computer labs.",
+      "name": "Melbourne",
+      "description": "You are in Melbourne, Australia. Kangaroos are jumping all around",
       "items": [
         {
           "name": "pencil",
@@ -251,15 +237,27 @@
       "directions": [
         {
           "directionName": "Up",
-          "room": "SiebelEastHallway"
+          "room": "Shanghai"
         }
       ],
       "monstersInRoom": [
         {
           "name": "Lucifer",
-          "attack": 10.0,
-          "defense": 10.0,
-          "health": 10.0
+          "attack": 30.0,
+          "defense": 15.0,
+          "health": 30.0
+        },
+        {
+          "name": "Kraken",
+          "attack": 30.0,
+          "defense": 15.0,
+          "health": 30.0
+        },
+        {
+          "name": "Cerebus",
+          "attack": 30.0,
+          "defense": 15.0,
+          "health": 30.0
         }
       ]
     }
