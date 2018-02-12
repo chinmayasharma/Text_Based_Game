@@ -1,19 +1,14 @@
 import com.google.gson.Gson;
-import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 public class AdventureTest {
 
-  public Adventure standardGame;
+  private static Gson gson = new Gson();
+  public static Layout layout =
+      gson.fromJson(AdventureConstants.getFileContentsAsString("siebel.json"), Layout.class);
 
-  @Before
-  public void setUp() {
-    standardGame = new Adventure("https://chinmayasharma.github.io/siebel.json");
-  }
+  public Adventure testGame = new Adventure(layout);
 
   /**
    * *********************************************************************************************************
@@ -24,16 +19,13 @@ public class AdventureTest {
   /** checks if starting Room as returned by findStaringRoom is same as expected room */
   @Test
   public void findStartingRoomTest() {
-    assertEquals(
-        standardGame.currentRoom,
-        standardGame.layout.findRoom(standardGame.layout.getStartingRoom()));
+    assertEquals(layout.getRooms().get(0), layout.findRoom(layout.getStartingRoom()));
   }
 
   /** checks if ending Room as returned by findStaringRoom is same as expected room */
   @Test
   public void findEndingRoomTest() {
-    assertEquals(
-        "Siebel1314", standardGame.layout.findRoom(standardGame.layout.getEndingRoom()).getName());
+    assertEquals("Miami", layout.findRoom(layout.getEndingRoom()).getName());
   }
 
   /**
@@ -45,19 +37,13 @@ public class AdventureTest {
   /** return list if possible items as String */
   @Test
   public void itemArrayListToStringTest() {
-    assertEquals("coin.", standardGame.currentRoom.itemString(standardGame.currentRoom.getItems()));
-  }
-
-  /** return list if possible null items as String */
-  @Test
-  public void invalidItemArrayListToStringTest() {
-    assertEquals("nothing", standardGame.currentRoom.itemString(null));
+    assertEquals("Textbook.", layout.getRooms().get(0).itemString());
   }
 
   /** return list if possible directions as String */
   @Test
   public void directionArrayListToStringTest() {
-    assertEquals("From here, you can go: East", standardGame.currentRoom.directionString());
+    assertEquals("From here, you can go: East", layout.getRooms().get(0).directionString());
   }
 
   /**
@@ -68,20 +54,27 @@ public class AdventureTest {
 
   /** checks if direction exists in the empty directionList if empty */
   @Test
+  public void directionTest() {
+    assertFalse(testGame.changeRoom("East"));
+  }
+
+
+  /** checks if direction exists in the empty directionList if empty */
+  @Test
   public void emptyDirectionTest() {
-    assertFalse(standardGame.changeRoom(""));
+    assertFalse(testGame.changeRoom(""));
   }
 
   /** checks if direction exists in the empty directionList if invalid */
   @Test
   public void checkInvalidDirectionTest() {
-    assertFalse(standardGame.changeRoom("Down"));
+    assertFalse(testGame.changeRoom("Down"));
   }
 
   /** checks if direction exists in the empty directionList if null */
   @Test
   public void checkNullDirectionTest() {
-    assertFalse(standardGame.changeRoom(null));
+    assertFalse(testGame.changeRoom(null));
   }
 
   /**
@@ -93,36 +86,26 @@ public class AdventureTest {
   /** checks if item exists in the itemList, if valid */
   @Test
   public void checkItemTest() {
-    assertTrue(standardGame.currentRoom.addItem("coin"));
+    assertTrue(layout.getRooms().get(0).addItem("coin"));
   }
 
   /** checks if item exists in the itemList, if invalid */
   @Test
   public void findInvalidItemTest() {
-    assertNull(standardGame.currentRoom.findItem("can"));
+    assertNull(layout.getRooms().get(0).findItem("can"));
   }
 
   /** checks if item exists in the itemList, if null */
   @Test
   public void findNullItemTest() {
-    assertNull(standardGame.currentRoom.findItem(null));
+    assertNull(layout.getRooms().get(0).findItem(null));
   }
 
   /** checks if item exists in the itemList, if empty */
   @Test
   public void findEmptyStringItemTest() {
-    assertNull(standardGame.currentRoom.findItem(""));
+    assertNull(layout.getRooms().get(0).findItem(""));
   }
 
-  /**
-   * *********************************************************************************************************
-   * Tests for floor plan validator
-   * *********************************************************************************************************
-   */
 
-  /** validates floor plan, as valid */
-  @Test
-  public void planValidatorTest() {
-    assertTrue(standardGame.layout.planValidator());
-  }
 }
