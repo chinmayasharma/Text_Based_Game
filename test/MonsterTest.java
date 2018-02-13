@@ -13,7 +13,7 @@ public class MonsterTest {
 
   @Test
   public void getName() {
-    assertEquals("Nerd", testGame.currentRoom.getMonstersInRoom().get(0).getName());
+    assertEquals("Zombie", testGame.currentRoom.getMonstersInRoom().get(0).getName());
   }
 
   @Test
@@ -27,14 +27,26 @@ public class MonsterTest {
   }
 
   @Test
-  public void getAttack() {}
+  public void getAttack() {
+    assertEquals(30, testGame.currentRoom.getMonstersInRoom().get(0).getAttack(), 0.01);
+
+  }
 
   @Test
-  public void getDefense() {}
+  public void getDefense() {
+    assertEquals(15, testGame.currentRoom.getMonstersInRoom().get(0).getDefense(), 0.01);
+  }
 
   @Test
-  public void getHealth() {}
+  public void getHealth() {
+    assertEquals(30, testGame.currentRoom.getMonstersInRoom().get(0).getHealth(), 0.01);
 
+  }
+
+  /** return list of possible monsters as String */
   @Test
-  public void getStatus() {}
+  public void monsterEmptyStringTest() {
+    assertNull(layout.getRooms().get(6).getMonstersInRoom());
+  }
+
 }
