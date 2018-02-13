@@ -7,6 +7,7 @@ public class AdventureConstants {
 
   public static String LOAD_GAME_MESSAGE = "Your game has been loaded.";
   public static String BEGIN_MESSAGE = "Your journey begins here.";
+  public static String END_MESSAGE = "You have reached your final destination.";
   public static String ROOM_MESSAGE = "This room contains ";
   public static String EMPTY_ITEM_LIST = "nothing";
   public static String EMPTY_MONSTER_LIST = "no monster";
@@ -14,13 +15,11 @@ public class AdventureConstants {
   public static String DEATH_MESSAGE = "You have died.";
   public static String CANT_MOVE = "There are still monsters here, I can’t move.";
   public static String CANT_TAKE = "There are still monsters here, I can’t take that.";
-
-
-
+  public static String LEVEL_UP = "LEVEL UP!!!. You are now Level ";
   public static final int STATUS_OK = 200;
 
   /**
-   * Reads contents of a file located in the project's 'data' directory into a String
+   * Reads contents of a file located in the project's 'data' directory into a String.
    *
    * @param filename contains the name of file
    * @return a String containing the file's contents
