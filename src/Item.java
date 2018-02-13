@@ -1,51 +1,42 @@
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Item {
 
   @SerializedName("name")
-  @Expose
   private String name;
 
   @SerializedName("damage")
-  @Expose
   private Double damage;
 
-    /**
-     *
-     * @param name
-     * @param damage
-     */
-    public Item(String name, Double damage) {
-        super();
-        this.name = name;
-        this.damage = damage;
-    }
+  /**
+   * Constructor for class Item.
+   *
+   * @param name name of item
+   * @param damage damage caused by item during attack
+   */
+  public Item(String name, Double damage) {
 
-    public String getName() {
-        return name;
-    }
+    this.name = name;
+    this.damage = damage;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  /**
+   * getter for item name.
+   *
+   * @return name of item
+   */
+  public String getName() {
 
-    public Item withName(String name) {
-        this.name = name;
-        return this;
-    }
+    return name;
+  }
 
-    public Double getDamage() {
-        return damage;
-    }
+  /**
+   * getter for item damage.
+   *
+   * @return amount of damage done by using item during attack
+   */
+  public Double getDamage() {
 
-    public void setDamage(Double damage) {
-        this.damage = damage;
-    }
-
-    public Item withDamage(Double damage) {
-        this.damage = damage;
-        return this;
-    }
-
+    return damage;
+  }
 }
