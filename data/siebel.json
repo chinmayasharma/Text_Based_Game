@@ -9,7 +9,7 @@
         "damage": 10.0
       },
       {
-        "name": "Toilet-Paper",
+        "name": "Boxers",
         "damage": 10.0
       }
     ],
@@ -36,7 +36,7 @@
       ],
       "monstersInRoom": [
         {
-          "name": "Nerd",
+          "name": "Zombie",
           "attack": 30.0,
           "defense": 15.0,
           "health": 30.0
@@ -88,11 +88,11 @@
       "description": "You are in New York, NY, USA. Let's go work at Wall Street! Oh wait, I was talking about myself... you should stick to playing the game.  ",
       "items": [
         {
-          "name": "pizza",
+          "name": "Pizza",
           "damage": 10.0
         },
         {
-          "name": "swag",
+          "name": "Sunglasses",
           "damage": 10.0
         }
       ],
@@ -138,11 +138,11 @@
       "description": "You are in Greenland, Denmark. All you see is ice.",
       "items": [
         {
-          "name": "USB-C connector",
+          "name": "Gloves",
           "damage": 10.0
         },
         {
-          "name": "grading rubric",
+          "name": "Jacket",
           "damage": 10.0
         }
       ],
@@ -169,14 +169,14 @@
     },
     {
       "name": "Shanghai",
-      "description": "You are in the east hallway. You can see Einstein Bros' Bagels and a stairway.",
+      "description": "You are in Shanghai, China. Yummm... you smell boodles nad fried rice",
       "items": [
         {
-          "name": "bagel",
+          "name": "Wallet",
           "damage": 10.0
         },
         {
-          "name": "coffee",
+          "name": "Noodles",
           "damage": 10.0
         }
       ],
@@ -230,7 +230,7 @@
       "description": "You are in Melbourne, Australia. Kangaroos are jumping all around",
       "items": [
         {
-          "name": "pencil",
+          "name": "Surfboard",
           "damage": 10.0
         }
       ],
