@@ -21,60 +21,50 @@ public class Layout {
   private Player player;
 
   @SerializedName("rooms")
-  private ArrayList<Room> rooms = null;
+  private ArrayList<Room> rooms;
 
   public String getStartingRoom() {
     return startingRoom;
-  }
-
-  public void setStartingRoom(String startingRoom) {
-    this.startingRoom = startingRoom;
-  }
-
-  public Layout withStartingRoom(String startingRoom) {
-    this.startingRoom = startingRoom;
-    return this;
   }
 
   public String getEndingRoom() {
     return endingRoom;
   }
 
-  public void setEndingRoom(String endingRoom) {
-    this.endingRoom = endingRoom;
-  }
+  /**
+   * Constructor for class Layout.
+   *
+   * @param startingRoom name of starting room
+   * @param endingRoom name of ending room
+   * @param player player object in layout
+   * @param rooms rooms objects in layout
+   */
+  public Layout(String startingRoom, String endingRoom, Player player, ArrayList<Room> rooms) {
 
-  public Layout withEndingRoom(String endingRoom) {
+    this.startingRoom = startingRoom;
     this.endingRoom = endingRoom;
-    return this;
+    this.player = player;
+    this.rooms = rooms;
   }
 
   public Player getPlayer() {
+
     return player;
   }
 
-  public void setPlayer(Player player) {
-    this.player = player;
-  }
-
-  public Layout withPlayer(Player player) {
-    this.player = player;
-    return this;
-  }
-
   public ArrayList<Room> getRooms() {
+
     return rooms;
   }
 
-  public void setRooms(ArrayList<Room> rooms) {
-    this.rooms = rooms;
-  }
-
-  public Layout withRooms(ArrayList<Room> rooms) {
-    this.rooms = rooms;
-    return this;
-  }
-
+  /**
+   * Make an API request to fetch game file.
+   *
+   * @param url takes url of json file as input
+   * @return layout
+   * @throws UnirestException library exception
+   * @throws MalformedURLException thrown for invalid input
+   */
   public static Layout makeApiRequest(String url) throws UnirestException, MalformedURLException {
 
     final HttpResponse<String> stringHttpResponse;
@@ -91,17 +81,48 @@ public class Layout {
       Gson gson = new Gson();
       layoutMap = gson.fromJson(json, Layout.class);
     }
+
     return layoutMap;
   }
 
   /**
+   * Finds room from name.
+   *
+   * @return finds room based on its name
+   */
+  public Room findRoom(String roomName) {
+
+    Room newRoom = null;
+    ArrayList<Room> roomList = getRooms();
+
+    // loops through all rooms
+    for (Room room : roomList) {
+
+      // checks if room name matches desired room
+      if (room.getName().equalsIgnoreCase(roomName)) {
+        newRoom = room;
+      }
+    }
+    return newRoom;
+  }
+
+  /**
+   * Equals method for class Layout.
+   *
    * @param o obejcts to e compared
    * @return boolean value from comparison
    */
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Layout)) return false;
+
+    if (this == o) {
+      return true;
+    }
+
+    if (!(o instanceof Layout)) {
+      return false;
+    }
+
     Layout layout = (Layout) o;
     return Objects.equals(getStartingRoom(), layout.getStartingRoom())
         && Objects.equals(getEndingRoom(), layout.getEndingRoom())
