@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.Objects;
-
 import com.google.gson.annotations.SerializedName;
+import java.util.ArrayList;
 
 public class Room {
 
@@ -12,42 +10,58 @@ public class Room {
   private String description;
 
   @SerializedName("items")
-  private ArrayList<Item> items = null;
+  private ArrayList<Item> items;
 
   @SerializedName("directions")
-  private ArrayList<Direction> directions = null;
+  private ArrayList<Direction> directions;
 
   @SerializedName("monstersInRoom")
-  private ArrayList<Monster> monstersInRoom = null;
+  private ArrayList<Monster> monstersInRoom;
 
-  /** @return name of room */
+  /**
+   * Getter for room name.
+   *
+   * @return name of room
+   */
   public String getName() {
     return name;
   }
 
-  /** @return description of room */
+  /**
+   * Getter for room description.
+   *
+   * @return description of room
+   */
   public String getDescription() {
     return description;
   }
 
-  /** @return list of items contained in room */
+  /**
+   * Getter for items in room.
+   *
+   * @return list of items contained in room
+   */
   public ArrayList<Item> getItems() {
     return items;
   }
 
-  /** @return list of possible directions to go in from the room */
+  /**
+   * Getter for possible directions from room.
+   *
+   * @return list of possible directions to go in from the room
+   */
   public ArrayList<Direction> getDirections() {
     return directions;
   }
 
-  public ArrayList<Direction> possibleDirections;
-
   /**
-   * @param directions
-   * @param items
-   * @param description
-   * @param name
-   * @param monstersInRoom
+   * Constructor for class Room.
+   *
+   * @param directions directions in room
+   * @param items items in room
+   * @param description description of room
+   * @param name name of room
+   * @param monstersInRoom monsters in room
    */
   public Room(
       String name,
@@ -62,100 +76,50 @@ public class Room {
     this.monstersInRoom = monstersInRoom;
   }
 
-  /** @param name */
-  public void setName(String name) {
-    this.name = name;
-  }
-
   /**
-   * @param name
-   * @return
+   * Setter for room directions.
+   *
+   * @param directions take in modified directions from room as parameters.
    */
-  public Room withName(String name) {
-    this.name = name;
-    return this;
-  }
-
-  public Room withDescription(String description) {
-    this.description = description;
-    return this;
-  }
-
-  public void setItems(ArrayList<Item> items) {
-    this.items = items;
-  }
-
-  public Room withItems(ArrayList<Item> items) {
-    this.items = items;
-    return this;
-  }
-
   public void setDirections(ArrayList<Direction> directions) {
     this.directions = directions;
   }
 
-  public Room withDirections(ArrayList<Direction> directions) {
-    this.directions = directions;
-    return this;
-  }
-
+  /**
+   * Getter for monsters in room.
+   *
+   * @return
+   */
   public ArrayList<Monster> getMonstersInRoom() {
     return monstersInRoom;
   }
 
-  public void setMonstersInRoom(ArrayList<Monster> monstersInRoom) {
-    this.monstersInRoom = monstersInRoom;
-  }
+  /** Displays the information of the room. */
+  public void roomInfo() {
 
-  public Room withMonstersInRoom(ArrayList<Monster> monstersInRoom) {
-    this.monstersInRoom = monstersInRoom;
-    return this;
-  }
+    // prints room description
+    System.out.println(getDescription());
 
-  /**
-   * Handles adding and removing items.
-   *
-   * @param itemName name of item
-   * @return boolean value true ir flase depending on feasibility
-   */
-  public boolean addItem(String itemName) {
-
-    Item item;
+    // handles possible null pointer exception
     try {
-      item = findItem(itemName);
 
-      // adds item to collected items
-      getItems().add(item);
-
-      return true;
-
+      System.out.println(AdventureConstants.ROOM_MESSAGE + itemString());
     } catch (NullPointerException e) {
 
-      return false;
+      System.out.println(AdventureConstants.ROOM_MESSAGE + AdventureConstants.EMPTY_ITEM_LIST);
     }
-  }
 
-  /**
-   * Handles adding and removing items.
-   *
-   * @param itemName name of item
-   * @return boolean value true ir flase depending on feasibility
-   */
-  public boolean removeItem(String itemName) {
-
-    Item item;
+    // handles possible null pointer exception
     try {
-      item = findItem(itemName);
 
-      // removes item from possible items
-      getItems().remove(item);
-
-      return true;
-
+      System.out.println(AdventureConstants.ROOM_MESSAGE + monsterString());
     } catch (NullPointerException e) {
 
-      return false;
+      System.out.println(AdventureConstants.ROOM_MESSAGE + AdventureConstants.EMPTY_MONSTER_LIST);
     }
+
+    // displays possible directions
+    System.out.println(directionString());
   }
 
   /**
@@ -166,17 +130,20 @@ public class Room {
    */
   public Item findItem(String inputString) {
 
+    ArrayList<Item> itemList = getItems();
+
     // checks if inputString is empty or null
     if (inputString == null || inputString.isEmpty()) {
       return null;
     }
 
     // checks if itemList is empty or null
-    if (getItems() == null || getItems().isEmpty()) {
+    if (itemList == null || itemList.isEmpty()) {
       return null;
     }
+
     // loops through all items in list of items
-    for (Item item : getItems()) {
+    for (Item item : itemList) {
 
       // checks if name of item exists in list of items
       if (inputString.equalsIgnoreCase(item.getName())) {
@@ -190,14 +157,13 @@ public class Room {
   /**
    * Formats array list of items into String.
    *
-   * @param itemList ArrayList of items
    * @return return formatted String of possible items
    */
-  public String itemString(ArrayList<Item> itemList) {
+  public String itemString() {
 
     // creates a new instance of type String Builder
     StringBuilder itemString = new StringBuilder();
-
+    ArrayList<Item> itemList = getItems();
     // checks if list of items is null
     if (itemList == null || itemList.isEmpty()) {
       itemString.append(AdventureConstants.EMPTY_ITEM_LIST);
@@ -217,7 +183,9 @@ public class Room {
       // appends formatted string onto String Builder
       itemString.append("and ");
       itemString.append(itemList.get(itemList.size() - 1).getName());
+      itemString.append(".");
     }
+
     return itemString.toString();
   }
 
@@ -228,7 +196,7 @@ public class Room {
    */
   public boolean hasMonster() {
 
-    return (getMonstersInRoom().size() > 0);
+    return (!(getMonstersInRoom() == null || getMonstersInRoom().isEmpty()));
   }
 
   /**
@@ -264,7 +232,7 @@ public class Room {
    *
    * @return return formatted String of possible monsters
    */
-  public String monsterString() {
+  String monsterString() {
 
     // creates a new instance of type String Builder
     StringBuilder monsterString = new StringBuilder();
@@ -293,6 +261,27 @@ public class Room {
   }
 
   /**
+   * Changes room absed on direction.
+   *
+   * @param inputDirection name of user specified direction
+   */
+  public boolean checkDirection(String inputDirection) {
+    String roomWanted = "";
+
+    if (inputDirection == null || inputDirection.isEmpty()) {
+      return false;
+    }
+
+    for (Direction direction : getDirections()) {
+      // find the room that is under the specific direction
+      if (direction.getDirectionName().toLowerCase().equals(inputDirection)) {
+        roomWanted = direction.getRoom();
+      }
+    }
+    return !roomWanted.isEmpty();
+  }
+
+  /**
    * Formats array list of directions to String.
    *
    * @return formatted String of possible directions
@@ -301,46 +290,74 @@ public class Room {
 
     // creates a new instance of type String Builder
     StringBuilder directionString = new StringBuilder();
+    ArrayList<Direction> directionList = getDirections();
 
     directionString.append("From here, you can go: ");
 
     // checks if list of directions is null
-    if (getDirections() == null) {
+    if (directionList == null) {
       directionString.append(AdventureConstants.EMPTY_DIRECTION_LIST);
 
       // checks if list of directions has a single direction
-    } else if (getDirections().size() == 1) {
+    } else if (directionList.size() == 1) {
 
-      directionString.append(getDirections().get(getDirections().size() - 1).getDirectionName());
+      directionString.append(directionList.get(directionList.size() - 1).getDirectionName());
 
       // if list of directions has multiple items
     } else {
 
       // loops through all directions and appends to String Builder
-      for (int i = 0; i < getDirections().size() - 1; i++) {
-        directionString.append(getDirections().get(i).getDirectionName());
+      for (int i = 0; i < directionList.size() - 1; i++) {
+        directionString.append(directionList.get(i).getDirectionName());
         directionString.append(", ");
       }
 
       // appends formatted string onto String Builder
       directionString.append("or ");
-      directionString.append(getDirections().get(getDirections().size() - 1).getDirectionName());
+      directionString.append(directionList.get(directionList.size() - 1).getDirectionName());
     }
     return directionString.toString();
   }
 
   /**
-   * @param o obejcts to e compared
-   * @return boolean value from comparison
+   * Checks for item in room.
+   *
+   * @param itemName nam eof item to be checked for
+   * @return if item exists
    */
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Room)) return false;
-    Room room = (Room) o;
-    return Objects.equals(getName(), room.getName())
-        && Objects.equals(getDescription(), room.getDescription())
-        && Objects.equals(getItems(), room.getItems())
-        && Objects.equals(getDirections(), room.getDirections());
+  public boolean checkItem(String itemName) {
+    ArrayList<Item> itemList = getItems();
+
+    if (itemList == null || itemList.isEmpty()) {
+      return false;
+    }
+
+    for (Item item : itemList) {
+      if (item.getName().equalsIgnoreCase(itemName)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Checks for monster in room.
+   *
+   * @param monsterName name of item to be checked for
+   * @return if item exists
+   */
+  public boolean checkMonster(String monsterName) {
+    ArrayList<Monster> monsterList = getMonstersInRoom();
+
+    if (monsterList == null || monsterList.isEmpty()) {
+      return false;
+    }
+
+    for (Monster monster : monsterList) {
+      if (monster.getName().equalsIgnoreCase(monsterName)) {
+        return true;
+      }
+    }
+    return false;
   }
 }
