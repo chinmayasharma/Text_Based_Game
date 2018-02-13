@@ -1,7 +1,5 @@
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-
 public class Monster {
 
   @SerializedName("name")
@@ -16,13 +14,15 @@ public class Monster {
   @SerializedName("health")
   private Double health;
 
-  public static double maxHealth = 750;
+  private static double maxHealth = 30;
 
   /**
-   * @param defense
-   * @param name
-   * @param attack
-   * @param health
+   * Constructor for class Monster.
+   *
+   * @param defense defense stat of monster
+   * @param name name of monster
+   * @param attack attack of monster
+   * @param health health of monster
    */
   public Monster(String name, double attack, double defense, double health) {
     this.name = name;
@@ -39,35 +39,12 @@ public class Monster {
     this.name = name;
   }
 
-  public Monster withName(String name) {
-    this.name = name;
-    return this;
-  }
-
   public Double getAttack() {
     return attack;
   }
 
-  public void setAttack(Double attack) {
-    this.attack = attack;
-  }
-
-  public Monster withAttack(Double attack) {
-    this.attack = attack;
-    return this;
-  }
-
   public Double getDefense() {
     return defense;
-  }
-
-  public void setDefense(Double defense) {
-    this.defense = defense;
-  }
-
-  public Monster withDefense(Double defense) {
-    this.defense = defense;
-    return this;
   }
 
   public Double getHealth() {
@@ -76,11 +53,6 @@ public class Monster {
 
   public void setHealth(Double health) {
     this.health = health;
-  }
-
-  public Monster withHealth(Double health) {
-    this.health = health;
-    return this;
   }
 
   /** Provides health status of monster. */
