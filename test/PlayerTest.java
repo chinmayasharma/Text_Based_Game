@@ -6,24 +6,14 @@ import static org.junit.Assert.*;
 public class PlayerTest {
 
   private static Gson gson = new Gson();
-  public static Layout layout =
+  private static Layout layout =
       gson.fromJson(AdventureConstants.getFileContentsAsString("siebel.json"), Layout.class);
 
-  public Adventure testGame = new Adventure(layout);
+  private Adventure testGame = new Adventure(layout);
 
   @Test
   public void getName() {
     assertEquals("Chinmaya", testGame.player.getName());
-  }
-
-  @Test
-  public void getInvalidName() {
-    assertNotEquals("Sharma", testGame.player.getName());
-  }
-
-  @Test
-  public void getNullName() {
-    assertNotEquals(null, testGame.player.getName());
   }
 
   @Test
@@ -32,38 +22,26 @@ public class PlayerTest {
   }
 
   @Test
-  public void getInvalidItems() {
-    assertNotEquals("Toothpaste", testGame.player.getItems().get(0).getName());
-  }
-
-  @Test
-  public void getNullItems() {
-    assertNotEquals(null, testGame.player.getItems().get(0).getName());
-  }
-
-  @Test
   public void getAttack() {
     assertEquals(35.0, testGame.player.getAttack(), 0.01);
-
   }
-
-  @Test
-  public void setAttack() {}
 
   @Test
   public void getDefense() {
     assertEquals(25.0, testGame.player.getDefense(), 0.01);
-
   }
 
   @Test
-  public void setDefense() {}
+  public void setDefense() {
+    testGame.player.setDefense(30.0);
+
+    assertEquals(30.0, testGame.player.getDefense(), 0.01);
+  }
 
   @Test
-  public void getHealth() {}
-
-  @Test
-  public void setHealth() {}
+  public void getHealth() {
+    assertEquals(50.0, testGame.player.getHealth(), 0.01);
+  }
 
   @Test
   public void getLevel() {
@@ -71,46 +49,8 @@ public class PlayerTest {
   }
 
   @Test
-  public void setLevel() {}
-
-  @Test
   public void getExperience() {
     assertEquals(0.0, testGame.player.getExperience(), 0.01);
-
-  }
-
-  @Test
-  public void setExperience() {}
-
-  @Test
-  public void addItem() {
-    testGame.player.addItem("coin");
-    assertTrue(testGame.player.addItem("coin"));
-  }
-
-  @Test
-  public void addInvalidItem() {
-    assertFalse(testGame.player.addItem("bazooka"));
-  }
-
-  @Test
-  public void addNullItem() {
-    assertFalse(testGame.player.addItem(null));
-  }
-
-  @Test
-  public void removeItem() {
-    assertTrue(testGame.player.removeItem("Toothbrush"));
-  }
-
-  @Test
-  public void removeInvalidItem() {
-    assertFalse(testGame.player.removeItem("bazooka"));
-  }
-
-  @Test
-  public void removeNullItem() {
-    assertFalse(testGame.player.removeItem(null));
   }
 
   @Test
@@ -134,7 +74,7 @@ public class PlayerTest {
   /** return list if possible items as String */
   @Test
   public void itemArrayListToStringTest() {
-    assertEquals("Toothbrush, and Toilet-Paper", testGame.player.itemString());
+    assertEquals("You are carrying Toothbrush, and Boxers", testGame.player.itemString());
   }
 
   @Test
