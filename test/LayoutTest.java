@@ -1,18 +1,13 @@
 import com.google.gson.Gson;
-import com.mashape.unirest.http.exceptions.UnirestException;
 import org.junit.Test;
-
-import java.net.MalformedURLException;
 
 import static org.junit.Assert.*;
 
 public class LayoutTest {
 
   private static Gson gson = new Gson();
-  public static Layout layout =
+  private static Layout layout =
       gson.fromJson(AdventureConstants.getFileContentsAsString("siebel.json"), Layout.class);
-
-  public Adventure testGame = new Adventure(layout);
 
   /** Checks if name of first room returned by getRooms method is as expected */
   @Test
@@ -38,7 +33,7 @@ public class LayoutTest {
 
   /**
    * *********************************************************************************************************
-   * String output for list of items and directions
+   * String output for list of items, directions and monsters
    * *********************************************************************************************************
    */
   @Test

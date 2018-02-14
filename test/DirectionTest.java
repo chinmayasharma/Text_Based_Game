@@ -9,14 +9,18 @@ public class DirectionTest {
   private static Layout expectedLayout =
       gson.fromJson(AdventureConstants.getFileContentsAsString("siebel.json"), Layout.class);
 
-  /** Checks if direction name returned is same as expected */
+  /**
+   * *********************************************************************************************************
+   * Tests for Getters in Direction Class
+   * *********************************************************************************************************
+   */
   @Test
   public void getDirectionName() {
     assertEquals(
         "East", expectedLayout.getRooms().get(0).getDirections().get(0).getDirectionName());
   }
 
-  /** Checks if name of room returned y getRoom method is the same as expected */
+  /** Checks if name of room returned by getRoom method is the same as expected */
   @Test
   public void getRoom() {
     assertEquals("Champaign", expectedLayout.getRooms().get(0).getName());

@@ -6,41 +6,37 @@ import static org.junit.Assert.*;
 public class MonsterTest {
 
   private static Gson gson = new Gson();
-  public static Layout layout =
-          gson.fromJson(AdventureConstants.getFileContentsAsString("siebel.json"), Layout.class);
+  private static Layout layout =
+      gson.fromJson(AdventureConstants.getFileContentsAsString("siebel.json"), Layout.class);
 
-  public Adventure testGame = new Adventure(layout);
+  private Adventure testGame = new Adventure(layout);
 
+  /**
+   * *********************************************************************************************************
+   * Tests for validity of getters for class Monster
+   * *********************************************************************************************************
+   */
   @Test
   public void getName() {
     assertEquals("Zombie", testGame.currentRoom.getMonstersInRoom().get(0).getName());
   }
 
-  @Test
-  public void getInvalidName() {
-    assertNotEquals("Bird", testGame.currentRoom.getMonstersInRoom().get(0).getName());
-  }
-
-  @Test
-  public void getNullName() {
-    assertNotEquals(null, testGame.currentRoom.getMonstersInRoom().get(0).getName());
-  }
-
+  /** Checks if attack stat of monster returned is valid */
   @Test
   public void getAttack() {
     assertEquals(30, testGame.currentRoom.getMonstersInRoom().get(0).getAttack(), 0.01);
-
   }
 
+  /** Checks if defense stat of monster returned is valid */
   @Test
   public void getDefense() {
     assertEquals(15, testGame.currentRoom.getMonstersInRoom().get(0).getDefense(), 0.01);
   }
 
+  /** Checks if health stat of monster returned is valid */
   @Test
   public void getHealth() {
     assertEquals(30, testGame.currentRoom.getMonstersInRoom().get(0).getHealth(), 0.01);
-
   }
 
   /** return list of possible monsters as String */
@@ -48,5 +44,4 @@ public class MonsterTest {
   public void monsterEmptyStringTest() {
     assertNull(layout.getRooms().get(6).getMonstersInRoom());
   }
-
 }

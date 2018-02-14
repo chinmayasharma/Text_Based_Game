@@ -6,10 +6,8 @@ import static org.junit.Assert.*;
 public class RoomTest {
 
   private static Gson gson = new Gson();
-  public static Layout layout =
+  private static Layout layout =
       gson.fromJson(AdventureConstants.getFileContentsAsString("siebel.json"), Layout.class);
-
-  public Adventure testGame = new Adventure(layout);
 
   /** Checks if name of first room is same as expected */
   @Test
@@ -65,14 +63,11 @@ public class RoomTest {
     assertNull(layout.getRooms().get(0).findItem(""));
   }
 
-
   /**
    * *********************************************************************************************************
    * String output for checking direction
    * *********************************************************************************************************
    */
-
-  /** checks if direction exists in the empty directionList if empty */
   @Test
   public void emptyDirectionTest() {
     assertFalse(layout.getRooms().get(0).checkDirection(""));

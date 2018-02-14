@@ -49,54 +49,110 @@ public class Player {
     this.experience = 0.0;
   }
 
+  /**
+   * Getter for player name.
+   *
+   * @return player name
+   */
   String getName() {
     return name;
   }
 
-  void setName(String name) {
-    this.name = name;
-  }
-
+  /**
+   * Getter for player items.
+   *
+   * @return items held by player
+   */
   ArrayList<Item> getItems() {
     return items;
   }
 
+  /**
+   * Getter for player attack stat.
+   *
+   * @return player attack value
+   */
   double getAttack() {
     return attack;
   }
 
+  /**
+   * Setter for player attack stat.
+   *
+   * @param attack new player attack value
+   */
   private void setAttack(double attack) {
     this.attack = attack;
   }
 
+  /**
+   * Getter for player defense stat.
+   *
+   * @return player defense value
+   */
   double getDefense() {
     return defense;
   }
 
+  /**
+   * Setter for player defense stat.
+   *
+   * @param defense defense value
+   */
   void setDefense(double defense) {
     this.defense = defense;
   }
 
+  /**
+   * Getter for player defense stat.
+   *
+   * @return player health value
+   */
   double getHealth() {
     return health;
   }
 
+  /**
+   * Setter for player health stat.
+   *
+   * @param health health value
+   */
   void setHealth(double health) {
     this.health = health;
   }
 
+  /**
+   * Getter for player level stat.
+   *
+   * @return player level value
+   */
   int getLevel() {
     return level;
   }
 
+  /**
+   * Setter for player level stat.
+   *
+   * @param level level value
+   */
   private void setLevel(int level) {
     this.level = level;
   }
 
+  /**
+   * Getter for player experience stat.
+   *
+   * @return player experience value
+   */
   double getExperience() {
     return experience;
   }
 
+  /**
+   * Setter for player experience stat.
+   *
+   * @param experience health value
+   */
   void setExperience(double experience) {
     this.experience = experience;
   }

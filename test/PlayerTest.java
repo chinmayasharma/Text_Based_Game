@@ -11,87 +11,83 @@ public class PlayerTest {
 
   private Adventure testGame = new Adventure(layout);
 
+  /**
+   * *********************************************************************************************************
+   * Tests for Getters for Player Class
+   * *********************************************************************************************************
+   */
   @Test
   public void getName() {
     assertEquals("Chinmaya", testGame.player.getName());
   }
 
+  /** Checks for item carried by player. */
   @Test
   public void getItems() {
     assertEquals("Toothbrush", testGame.player.getItems().get(0).getName());
   }
 
+  /** Checks for value of player attack stat */
   @Test
   public void getAttack() {
     assertEquals(35.0, testGame.player.getAttack(), 0.01);
   }
 
+  /** Checks for value of player defense stat */
   @Test
   public void getDefense() {
     assertEquals(25.0, testGame.player.getDefense(), 0.01);
   }
 
+  /** Sets player defense stat */
   @Test
   public void setDefense() {
-    testGame.player.setDefense(30.0);
 
+    testGame.player.setDefense(30.0);
     assertEquals(30.0, testGame.player.getDefense(), 0.01);
   }
 
+  /** Checks for value of player defense stat */
   @Test
   public void getHealth() {
     assertEquals(50.0, testGame.player.getHealth(), 0.01);
   }
 
+  /** Checks for value of player level stat */
   @Test
   public void getLevel() {
     assertEquals(1, testGame.player.getLevel());
   }
 
+  /** Checks for value of player experience stat */
   @Test
   public void getExperience() {
     assertEquals(0.0, testGame.player.getExperience(), 0.01);
   }
 
-  @Test
-  public void findItem() {
-    assertEquals("Toothbrush", testGame.player.findItem("Toothbrush").getName());
-  }
-
-  @Test
-  public void findInvalidItem() {
-    assertNull(testGame.player.findItem("bazooka"));
-  }
-
-  @Test
-  public void findNullItem() {
-    assertNull(testGame.player.findItem(null));
-  }
-
-  @Test
-  public void itemString() {}
-
-  /** return list if possible items as String */
-  @Test
-  public void itemArrayListToStringTest() {
-    assertEquals("You are carrying Toothbrush, and Boxers", testGame.player.itemString());
-  }
-
+  /**
+   * *********************************************************************************************************
+   * Tests for Finding Required Experience
+   * *********************************************************************************************************
+   */
   @Test
   public void levelOneExperience() {
     assertEquals(25.0, testGame.player.requiredExperience(1), 0.01);
   }
 
+  /** Checks for experience required for level two */
   @Test
   public void levelTwoExperience() {
     assertEquals(50.0, testGame.player.requiredExperience(2), 0.01);
   }
 
+  /** Checks for experience required for level four */
   @Test
   public void levelFourExperience() {
     assertEquals(145.75, testGame.player.requiredExperience(4), 0.01);
   }
 
+  /** Checks for experience required for level ten */
   @Test
   public void levelTenExperience() {
     assertEquals(3946.2, testGame.player.requiredExperience(10), 0.01);
